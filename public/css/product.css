@@ -1,0 +1,84 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.main-header {
+  width: 100%;
+  height: 3.5rem;
+  background-color: #dbc441;
+  padding: 0 1.5rem;
+}
+.main-header_nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.main-header_item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.item {
+  margin: 0 1rem;
+  padding: 0;
+}
+.item a {
+  text-decoration: none;
+  color: #000;
+}
+/* .active applied if a has active class attached to it */
+.item a:hover,
+.item a:active,
+.item a.active {
+  color: #3e00a1;
+}
+.product-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+}
+
+.form-control {
+  margin: 1rem 0;
+}
+
+.form-control label,
+.form-control input {
+  display: block;
+  width: 100%;
+}
+
+.form-control input {
+  height: 2rem;
+  border: 1px solid #dbc441;
+  font: inherit;
+  border-radius: 2px;
+}
+.form-control input:focus {
+  outline: none;
+}
+
+button {
+  height: 2rem;
+  width: 8rem;
+  font: inherit;
+  border: 1px solid #3e00a1;
+  color: #3e00a1;
+  background-color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 500ms;
+}
+
+button:hover,
+button:active {
+  background: #3e00a1;
+  color: #fff;
+}
