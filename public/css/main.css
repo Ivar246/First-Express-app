@@ -4,6 +4,9 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+body {
+  overflow-x: hidden;
+}
 
 .main-header {
   width: 100%;
