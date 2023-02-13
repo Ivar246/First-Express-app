@@ -1,0 +1,59 @@
+.product-form {
+  transform: translateY(25px);
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: rgba(226, 186, 55, 0.582);
+}
+form > h1 {
+  text-align: center;
+  color: #3e00a1;
+}
+
+.form-control {
+  margin: 1rem 0;
+}
+
+label {
+  color: #3e00a1;
+  font-weight: 600;
+}
+
+.form-control label,
+.form-control input {
+  display: block;
+  width: 100%;
+}
+
+.form-control input {
+  height: 2rem;
+  border: 1px solid #dbc441;
+  font: inherit;
+  border-radius: 2px;
+  margin-top: 10px;
+}
+.form-control input:focus {
+  outline: none;
+}
+
+button {
+  height: 2rem;
+  width: 8rem;
+  font: inherit;
+  border: 1px solid #3e00a1;
+  color: #3e00a1;
+  background-color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 500ms;
+}
+
+button:hover,
+button:active {
+  background: #3e00a1;
+  color: #fff;
+}

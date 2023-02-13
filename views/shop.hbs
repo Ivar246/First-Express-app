@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>{{pageTitle}}</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="main-header_nav">
+        <ul class="main-header_item-list">
+          <li class="item"><a href="/">Shop</a></li>
+          <li class="item"><a href="/admin/add-product">Add Product</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      {{#if hasProducts}}
+
+        <div class="grid">
+          {{#each prods}}
+            <article class="card product-items">
+              <header class="card_header">
+                <h1 class="product_title">{{this.title}}</h1>
+              </header>
+              <div class="card_image">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgCDuC4Al_s-FleQae4_M3LL79MybceL6BeA&usqp=CAU"
+                  alt=""
+                />
+              </div>
+              <div class="card_content">
+                <h2 class="product_price">$45</h2>
+                <p class="product_description">This is awsome produccts</p>
+              </div>
+              <div class="card_actions">
+                <button class="btn">Add To cart</button>
+              </div>
+            </article>
+          {{/each}}
+        </div>
+      {{else}}
+        <h1>No products available</h1>
+      {{/if}}
+    </main>
+  </body>
+</html>

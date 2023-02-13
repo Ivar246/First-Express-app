@@ -1,4 +1,4 @@
-* {
+/* * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -33,8 +33,11 @@
   color: #000;
 }
 /* .active applied if a has active class attached to it */
-.item a:hover,
+/* .item a:hover,
 .item a:active,
 .item a.active {
-  color: #3e00a1;
+  color: #3e00a1; */
+/* } */
+h1 {
+  color: red;
 }
