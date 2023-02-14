@@ -8,7 +8,7 @@
   padding: 20px;
   background-color: rgba(226, 186, 55, 0.582);
 }
-form > h1 {
+form > h2 {
   text-align: center;
   color: #3e00a1;
 }
@@ -23,19 +23,23 @@ label {
 }
 
 .form-control label,
-.form-control input {
+.form-control input,
+textarea {
   display: block;
   width: 100%;
 }
 
-.form-control input {
+.form-control input,
+textarea {
   height: 2rem;
   border: 1px solid #dbc441;
   font: inherit;
   border-radius: 2px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
-.form-control input:focus {
+.form-control input:focus,
+textarea:focus {
   outline: none;
 }
 
@@ -56,4 +60,8 @@ button:hover,
 button:active {
   background: #3e00a1;
   color: #fff;
+}
+
+textarea {
+  height: 10rem;
 }
