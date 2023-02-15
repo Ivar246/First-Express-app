@@ -1,9 +1,11 @@
+const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const app = express();
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const hbs = require("express-handlebars");
+const errorController = require("./controllers/products");
+
 // app.engine(
 //   "hbs",
 //   hbs.engine({
@@ -13,6 +15,7 @@ const hbs = require("express-handlebars");
 //   })
 // );
 // app.engine('html', )
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -21,8 +24,6 @@ app.use(express.static(path.join(__dirname, "public"))); // serving static file
 
 app.use("/admin", admin.routes);
 app.use(shopRoutes);
-app.use((req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Page Not Found" });
-});
+app.use(errorController.errorHandler);
 
 app.listen(4000);
