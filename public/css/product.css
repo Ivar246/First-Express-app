@@ -31,7 +31,7 @@ button:active {
   row-gap: 20px;
 }
 .card {
-  background-color: yellow;
+  background-color: rgba(255, 255, 255, 0.904);
   position: relative;
   padding: 10px;
   height: auto;
@@ -40,7 +40,7 @@ button:active {
   line-height: 30px;
   flex: 1;
   border-radius: 5px;
-  box-shadow: 0 0 2px rgb(29, 26, 26);
+  box-shadow: 0 0 3px rgb(29, 26, 26);
 }
 
 .card_header h1 {
