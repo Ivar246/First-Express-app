@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const errorController = require("./controllers/products");
+const errorController = require("./controllers/error");
 
 // app.engine(
 //   "hbs",

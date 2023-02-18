@@ -23,17 +23,10 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
-    res.render("shop/product-list", {
+    res.render("admin/products", {
       prods: products,
-      pageTitle: "Shop",
-      path: "/",
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true,
+      pageTitle: "Admin Product",
+      path: "/admin/products",
     });
   });
-};
-
-exports.errorHandler = (req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Page Not Found", path: null });
 };
