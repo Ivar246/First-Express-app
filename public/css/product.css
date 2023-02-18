@@ -36,9 +36,11 @@ button:active {
   padding: 10px;
   height: auto;
   max-width: 18rem;
-  border: 1px solid black;
+  border: none;
   line-height: 30px;
   flex: 1;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgb(29, 26, 26);
 }
 
 .card_header h1 {

@@ -1,16 +1,4 @@
-const fs = require("fs");
 const Product = require("../models/product");
-// const readData = fs.readFile("../products.json");
-// console.log(readData);
-// const parsedData = JSON.parse(readData);
-
-// function storeInJson(req) {
-//   const data = JSON.stringify(req.body);
-//   fs.writeFile("products.json", data, (err) => {
-//     if (err) throw err;
-//     console.log("Data has been submitted.");
-//   });
-// }
 
 exports.getAddProduct = (req, res, next) => {
   res.render("add-product", {
@@ -34,14 +22,15 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  const products = Product.fetchAll();
-  res.render("shop", {
-    prods: products,
-    pageTitle: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true,
+  Product.fetchAll((products) => {
+    res.render("shop", {
+      prods: products,
+      pageTitle: "Shop",
+      path: "/",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true,
+    });
   });
 };
 
