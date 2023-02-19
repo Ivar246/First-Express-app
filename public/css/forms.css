@@ -40,7 +40,7 @@ textarea {
 }
 .form-control input:focus,
 textarea:focus {
-  outline: none;
+  outline: #3e00a1 solid 2px;
 }
 
 button {
