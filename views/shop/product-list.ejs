@@ -1,40 +1,43 @@
 <%- include("../includes/head.ejs") %>
-<link rel="preload" href="/css/product.css" as="style">
-<link rel="stylesheet" href="/css/product.css">
+  <link rel="stylesheet" href="/css/product.css">
 
 
-</head>
+  </head>
+
   <body>
     <%- include("../includes/navigation.ejs") %>
 
-    <main>
-      <% if (prods.length>0){ %>
-      <div class="grid">
-        <% for (let product of prods){ %>
-        <article class="card product-items">
-          <header class="card_header">
-            <h1 class="product_title"><%= product.title%></h1>
-          </header>
-          <div class="card_image">
-            <img
-              src="<%= product.imgUrl %>"
-              alt="<%= product.title%>"
-            />
+      <main>
+        <% if (prods.length>0){ %>
+          <div class="grid">
+            <% for (let product of prods){ %>
+              <article class="card product-items">
+                <header class="card_header">
+                  <h1 class="product_title">
+                    <%= product.title%>
+                  </h1>
+                </header>
+                <div class="card_image">
+                  <img src="<%= product.imgUrl %>" alt="<%= product.title%>" />
+                </div>
+                <div class="card_content">
+                  <h2 class="product_price">$<%= product.price%>
+                  </h2>
+                  <p class="product_description">
+                    <%= product.description%>
+                  </p>
+                </div>
+                <div class="card_actions">
+                  <a href="/products/<%= product.id%>" class="btn">Details</a>
+                  <form action="/add-to-cart">
+                    <button type="submit" class="btn">Add To cart</button>
+                  </form>
+                </div>
+              </article>
+              <%}%>
           </div>
-          <div class="card_content">
-            <h2 class="product_price">$<%= product.price%></h2>
-            <p class="product_description"><%= product.description%></p>
-          </div>
-          <div class="card_actions">
-            <form action="/add-to-cart">
-            <button  type="submit" class="btn">Add To cart</button>
-            </form>
-          </div>
-        </article>
-        <%}%>
-      </div>
-      <% } else { %>
-      <h1>No product Available</h1>
-      <% } %>
-    </main>
-<%- include("../includes/end.ejs")%>
+          <% } else { %>
+            <h1>No product Available</h1>
+            <% } %>
+      </main>
+      <%- include("../includes/end.ejs")%>

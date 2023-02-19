@@ -2,7 +2,7 @@
   padding: 20px;
 } */
 
-button {
+.btn {
   margin-top: 10px;
   height: 2rem;
   width: 8rem;
@@ -16,8 +16,13 @@ button {
   transition: background-color 500ms;
   /* transform: translateY(30px); */
 }
-button:hover,
-button:active {
+a {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+.btn:hover,
+.btn:active {
   background: #3e00a1;
   color: #fff;
 }
@@ -58,4 +63,8 @@ button:active {
 .card_content .product_description {
   text-align: center;
   color: #3e00a1;
+}
+
+.cart_actions {
+  display: inline;
 }
