@@ -37,11 +37,11 @@ a {
   margin: 0 auto;
 }
 .card {
-  background-color: rgba(255, 255, 255, 0.904);
+  background-color: #7343e375;
   position: relative;
   padding: 10px;
   height: auto;
-  max-width: 18rem;
+  max-width: 20rem;
   border: none;
   line-height: 30px;
   flex: 1;
@@ -55,16 +55,17 @@ a {
 }
 
 .card_image {
-  margin-top: 5px;
-  text-align: center;
+  margin: 5px auto;
+  max-width: 14rem;
+}
+
+.card_image img {
+  width: 100%;
+  border-radius: 5px;
 }
 
 .card_content .product_price,
 .card_content .product_description {
   text-align: center;
   color: #3e00a1;
-}
-
-.cart_actions {
-  display: inline;
 }
