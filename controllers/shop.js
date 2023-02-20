@@ -10,6 +10,15 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+  console.log(
+    Product.findById(req.productId, (product) => {
+      console.log("product");
+    })
+  );
+  res.redirect("/");
+};
+
 exports.getIndex = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render("shop/index", {
