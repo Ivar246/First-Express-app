@@ -1,11 +1,5 @@
 [
     {
-        "productId": 1243,
-        "title": "Hemlet",
-        "description": "this is awsome book",
-        "price": 500
-    },
-    {
         "title": "spoon",
         "description": "This is highly durable spoon",
         "price": "2500",
