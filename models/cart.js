@@ -35,7 +35,7 @@ module.exports = class Cart {
       }
       cart.totalPrice = Number(cart.totalPrice) + price;
       fs.writeFile(fPath, JSON.stringify(cart), (error) => {
-        console.log(error, "while writing file to cart.json");
+        if (error) console.log(error, "while writing file to cart.json");
       });
     });
   }
