@@ -15,7 +15,8 @@ const getProductsFromFile = (cb) => {
 };
 
 module.exports = class Product {
-  constructor(title, desc, price, imgUrl) {
+  constructor(productId, title, desc, price, imgUrl) {
+    this.productId = productId;
     this.title = title;
     this.description = desc;
     this.price = price;
@@ -23,11 +24,38 @@ module.exports = class Product {
   }
 
   save() {
-    this.productId = Math.random().toString();
     getProductsFromFile((products) => {
-      products.push(this);
-      fs.writeFile(fPath, JSON.stringify(products), (error) => {
-        if (error) console.log(error, "while writing to products.json");
+      if (this.productId) {
+        const updatedProducts = products.map((prod) => {
+          if (prod.productId === this.productId) return (prod = this);
+          return prod;
+        });
+
+        // const existingProductIndex = products.findIndex(
+        //   (prod) => prod.productId === this.productId
+        // );
+        // const updatedProducts = [...products];
+        // updatedProducts[existingProductIndex] = this;
+
+        fs.writeFile(fPath, JSON.stringify(updatedProducts), (error) => {
+          if (error) console.log(error, "while updating to products.json");
+        });
+      } else {
+        this.productId = Math.random().toString();
+        products.push(this);
+        fs.writeFile(fPath, JSON.stringify(products), (error) => {
+          if (error) console.log(error, "while writing to products.json");
+        });
+      }
+    });
+  }
+
+  static deleteById(id) {
+    getProductsFromFile((products) => {
+      const updatedProducts = products.filter((prod) => prod.productId !== id);
+      fs.write(fPath, JSON.stringify(updatedProducts), (error) => {
+        if (!error) {
+        }
       });
     });
   }
