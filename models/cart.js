@@ -12,7 +12,6 @@ module.exports = class Cart {
     //fetch the previous cart
     fs.readFile(fPath, (error, fdata) => {
       let cart = { products: [], totalPrice: 0 };
-      console.log();
       if (!(error || fdata.length === 0)) {
         cart = JSON.parse(fdata);
       }
@@ -30,18 +29,37 @@ module.exports = class Cart {
         cart.products = [...cart.products];
         cart.products[existingProdIndex] = updatedProduct;
       } else {
-        updatedProduct = { ProductId: id, qty: 1 };
+        updatedProduct = {
+          productId: id,
+          qty: 1,
+        };
         cart.products = [...cart.products, updatedProduct];
       }
-      cart.totalPrice = Number(cart.totalPrice) + price;
+      cart.totalPrice = cart.totalPrice + +price;
       fs.writeFile(fPath, JSON.stringify(cart), (error) => {
         if (error) console.log(error, "while writing file to cart.json");
       });
     });
   }
 
-  constructor() {
-    this.products = [];
-    this.totalPrice = 0;
+  static deleteProduct(id, productPrice) {
+    fs.readFilie(fPath, (error, fdata) => {
+      if (error) {
+        return;
+      }
+      const updatedCart = { ...fdata };
+      const product = updatedCart.products.find(
+        (prod) => prod.productId === id
+      );
+      const productQty = product.qty;
+      updatedCart.products = updatedCart.products.filter(
+        (prod) => prod.productId !== id
+      );
+      updatedCart.totalPrice =
+        updatedCart.totalPrice - productPrice * productQty;
+      fs.writeFile(fPath, JSON.stringify(updatedCart), (error) => {
+        if (error) console.log(error, "while updating file to cart.json");
+      });
+    });
   }
 };
