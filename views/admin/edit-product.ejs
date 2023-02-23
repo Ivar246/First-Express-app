@@ -5,7 +5,7 @@
   <body>
     <%- include("../includes/navigation.ejs") %>
 
-    <form class="product-form" action="/admin/<% if (editing) {%> edit-product <%} else { %>add-product<%}%>" method="POST">
+    <form class="product-form" action="/admin/<% if (editing) {%>edit-product<%}else{%>add-product<%}%>" method="POST">
       <h2>Add Product</h2>
       <div class="form-control">
         <label for="title">Title</label>
@@ -17,6 +17,9 @@
         <label for="imageUrl">Image Url</label>
         <input type="url" name="imageUrl" value="<% if (editing){%><%=product.imgUrl%> <%}%>"/>
       </div>
+      <% if (editing) {%>
+        <input type="hidden" name="productId" value="<%= product.productId%>" >
+      <%}%>
       <button type="submit"><% if (editing){%> Update Procuct <%} else {%>Add Product<%}%></button>
     </form>
     <%- include("../includes/end.ejs")%>
