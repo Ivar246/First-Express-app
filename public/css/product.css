@@ -1,26 +1,7 @@
-.btn {
-  margin-top: 10px;
-  height: 2rem;
-  width: 8rem;
-  font: inherit;
-  border: 1px solid #3e00a1;
-  color: #3e00a1;
-  background-color: #fff;
-  border-radius: 3px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 500ms;
-  /* transform: translateY(30px); */
-}
 a {
   text-decoration: none;
   display: block;
   text-align: center;
-}
-.btn:hover,
-.btn:active {
-  background: #3e00a1;
-  color: #fff;
 }
 
 .grid {
