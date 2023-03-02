@@ -14,10 +14,14 @@ exports.postAddProduct = (req, res, next) => {
     req.body.title,
     req.body.description,
     req.body.price,
-    req.body.imageUrl
+    "hello"
   );
-  product.save();
-  res.redirect("/");
+  product
+    .save()
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((error) => console.log(error));
 };
 
 exports.getEditProduct = (req, res, next) => {
