@@ -5,7 +5,6 @@ const app = express();
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
-
 // app.engine(
 //   "hbs",
 //   hbs.engine({
