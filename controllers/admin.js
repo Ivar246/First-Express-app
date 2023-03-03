@@ -53,7 +53,6 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDesc = req.body.description;
   Product.findOne({ where: { id: prodId } })
     .then((product) => {
-      console.log(product);
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDesc;
@@ -61,7 +60,6 @@ exports.postEditProduct = (req, res, next) => {
       return product.save();
     })
     .then((result) => {
-      console.log(result);
       console.log("Product updated");
       res.redirect("/admin/products");
     })
