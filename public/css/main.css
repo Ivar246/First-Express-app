@@ -51,7 +51,7 @@ body {
 main {
   padding: 1rem;
 }
-button {
+.btn {
   height: 2rem;
   width: 8rem;
   font: inherit;
@@ -64,8 +64,8 @@ button {
   transition: background-color 500ms;
 }
 
-button:hover,
-button:active {
+.btn:hover,
+.btn:active {
   background: #3e00a1;
   color: #fff;
 }
