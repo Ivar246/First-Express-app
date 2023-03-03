@@ -82,6 +82,13 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
-  res.redirect("/admin/products");
+  Product.findOne({ where: { id: prodId } })
+    .then((product) => {
+      return product.destroy();
+    })
+    .then((result) => {
+      console.log("Product destroyed");
+      res.redirect("/admin/products");
+    })
+    .catch((error) => console.log(error));
 };
