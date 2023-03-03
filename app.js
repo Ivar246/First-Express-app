@@ -5,6 +5,7 @@ const app = express();
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
+const sequelize = require("./util/database");
 // app.engine(
 //   "hbs",
 //   hbs.engine({
@@ -13,7 +14,6 @@ const errorController = require("./controllers/error");
 //     extname: ".hbs",
 //   })
 // );
-// app.engine('html', )
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -25,4 +25,11 @@ app.use("/admin", admin.routes);
 app.use(shopRoutes);
 app.use(errorController.errorHandler);
 
-app.listen(4000);
+// telling sequelize to create table if not exist
+sequelize
+  .sync()
+  .then((result) => {
+    console.log(result);
+    app.listen(4000);
+  })
+  .catch((error) => console.log(error));
