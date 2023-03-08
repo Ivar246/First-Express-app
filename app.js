@@ -43,7 +43,7 @@ User.hasMany(Product);
 
 // telling sequelize to create table if not exist
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then((result) => {
     return User.findByPk(1);
   })
