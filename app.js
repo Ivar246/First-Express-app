@@ -1,14 +1,20 @@
+// express setup import
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
 const app = express();
+const bodyParser = require("body-parser");
+
+// routes
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
+
+// database import
 const sequelize = require("./util/database");
 const Product = require("./models/product");
 const User = require("./models/user");
-
+const Cart = require("./models/cart");
+const CartItem = require("./models/cart-item");
 // app.engine(
 //   "hbs",
 //   hbs.engine({
@@ -18,6 +24,7 @@ const User = require("./models/user");
 //   })
 // );
 
+// template setting
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -31,19 +38,28 @@ app.use((req, res, next) => {
     .catch((error) => console.log(error));
 });
 
+// parser
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public"))); // serving static file
 
+// serving static file
+app.use(express.static(path.join(__dirname, "public")));
+
+// paths to sub paths
 app.use("/admin", admin.routes);
 app.use(shopRoutes);
 app.use(errorController.errorHandler);
 
+// Associations between models(relation between tables)
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 // telling sequelize to create table if not exist
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then((result) => {
     return User.findByPk(1);
   })
