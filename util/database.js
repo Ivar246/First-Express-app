@@ -11,6 +11,7 @@
 
 const Sequelize = require("sequelize");
 
+// instance of mysql database
 const sequelize = new Sequelize("Shop", "root", "Root@123", {
   dialect: "mysql",
   host: "localhost",
