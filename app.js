@@ -53,15 +53,15 @@ app.use(errorController.errorHandler);
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
 
-User.hasOne(Cart);
 Cart.belongsTo(User);
+User.hasOne(Cart);
 
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 // telling sequelize to create table if not exist
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then((result) => {
     return User.findByPk(1);
   })
