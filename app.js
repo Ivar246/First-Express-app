@@ -61,7 +61,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 
 // telling sequelize to create table if not exist
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then((result) => {
     return User.findByPk(1);
   })
@@ -72,6 +72,9 @@ sequelize
     return user;
   })
   .then((user) => {
+    return user.createCart();
+  })
+  .then((cart) => {
     app.listen(4000, () => {
       console.log("listening on port 4000");
     });
