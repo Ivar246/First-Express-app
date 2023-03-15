@@ -52,8 +52,10 @@ app.use(errorController.errorHandler);
 // Associations between models(relation between tables)
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
+
 User.hasOne(Cart);
 Cart.belongsTo(User);
+
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
@@ -70,6 +72,8 @@ sequelize
     return user;
   })
   .then((user) => {
-    app.listen(4000);
+    app.listen(4000, () => {
+      console.log("listening on port 4000");
+    });
   })
   .catch((error) => console.log(error));
