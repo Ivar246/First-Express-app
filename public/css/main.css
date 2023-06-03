@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
 body {
   overflow-x: hidden;
 }
@@ -19,10 +20,14 @@ body {
   padding: 0;
   box-shadow: 0 0 2px rgba(16, 7, 7, 92%);
 }
+
 .main-header_nav {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding-right: 25px;
 }
 
 .main-header_item-list {
@@ -36,11 +41,13 @@ body {
   margin: 0 1rem;
   padding: 0;
 }
+
 .item a {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
 }
+
 /* .active applied if a has active class attached to it */
 .item a:hover,
 .item a:active,
@@ -51,6 +58,7 @@ body {
 main {
   padding: 1rem;
 }
+
 .btn {
   height: 2rem;
   width: 8rem;
