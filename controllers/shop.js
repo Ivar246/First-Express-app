@@ -10,7 +10,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: "All Products",
         path: "/products",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((error) => {
@@ -26,7 +26,7 @@ exports.getProduct = (req, res, next) => {
         product: product,
         pageTitle: "Product Details",
         path: "/products",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((error) => console.log(error));
@@ -39,7 +39,7 @@ exports.getIndex = (req, res, next) => {
         prods: products,
         pageTitle: "Shop",
         path: "/",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((error) => {
@@ -65,7 +65,7 @@ exports.getCart = (req, res, next) => {
         products: user.cart.items || [],
         path: "/cart",
         pageTitle: "Your Cart",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err))
@@ -100,7 +100,7 @@ exports.postDeleteCart = (req, res, next) => {
 }
 
 exports.postOrder = (req, res, next) => {
-  req.user.populate("cart.items.productId")
+  req.session.user.populate("cart.items.productId")
     .then(user => {
       const products = user.cart.items.map(i => {
         console.log(i.productId)
