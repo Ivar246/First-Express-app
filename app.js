@@ -3,6 +3,15 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const bodyParser = require("body-parser");
+const session = require("express-session")
+const MongoDBStore = require("connect-mongodb-session")(session)
+
+
+const store = new MongoDBStore({
+    uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
+    collection: 'session',
+
+});
 
 const connectDB = require("./connection")
 // routes
@@ -37,29 +46,29 @@ const User = require("./models/user")
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use((req, res, next) => {
 
-    User.findById("6479db820b5953c576f2edd2")
-        .then(user => {
-            if (!user) {
-                const user = new User({
-                    name: "Ravi",
-                    email: "ravistha869@gmail.com",
-                    cart: {
-                        items: []
-                    }
-                })
-                user.save()
-                user = user;
-            }
-            req.user = user;
-            next();
-        }).catch(error => console.log(error))
 
-});
 
 // parser
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}))
+
+
+app.use((req, res, next) => {
+
+    User.findById(req.session.user._id)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err))
+
+});
 
 // mongoose connection
 connectDB();
