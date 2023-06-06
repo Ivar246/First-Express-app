@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 const { populate } = require("./product");
 
 const UserSchema = new mongoose.Schema({
-    name: {
+
+    email: {
         type: String,
         required: true
     },
-    email: {
+    password: {
         type: String,
         required: true
     },
