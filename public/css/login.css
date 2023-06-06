@@ -24,6 +24,11 @@ main {
     overflow: hidden;
 }
 
+.signup-box {
+    height: 470px;
+
+}
+
 .box::before {
     content: '';
     position: absolute;
