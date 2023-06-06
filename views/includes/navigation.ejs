@@ -30,6 +30,9 @@
         <li class="main-header_item item">
           <a class="<%= path==='/login' ? 'active': ''%>" href="/login">Login</a>
         </li>
+        <li class="main-header_item item">
+          <a class="<%= path==='/signup' ? 'active': ''%>" href="/signup">SignUp</a>
+        </li>
         <%} else{%>
           <li main-header_item item>
             <form action="/logout" method="post">
