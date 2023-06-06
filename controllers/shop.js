@@ -100,7 +100,7 @@ exports.postDeleteCart = (req, res, next) => {
 }
 
 exports.postOrder = (req, res, next) => {
-  req.session.user.populate("cart.items.productId")
+  req.user.populate("cart.items.productId")
     .then(user => {
       const products = user.cart.items.map(i => {
         console.log(i.productId)
@@ -127,6 +127,9 @@ exports.postOrder = (req, res, next) => {
 
 
 exports.getOrders = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    return res.redirect("/login");
+  }
   Order.find({ "user.userId": req.user._id })
     .then(orders => {
       console.log("orders:", orders)
@@ -134,7 +137,7 @@ exports.getOrders = (req, res, next) => {
         orders,
         pageTitle: "Orders",
         path: "/orders",
-        isAuthenticated: req.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     });
 }
