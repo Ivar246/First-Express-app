@@ -9,4 +9,7 @@ router.post("/login", authContorllers.postLogin)
 
 router.post("/logout", authContorllers.postLogout)
 
+router.get("/signup", authContorllers.getSignup)
+
+router.post("/signup", authContorllers.postSignup)
 module.exports = router
