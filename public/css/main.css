@@ -77,3 +77,23 @@ main {
   background: #3e00a1;
   color: #fff;
 }
+
+.user-message {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+
+}
+
+.user-message--error {
+  background: rgb(86 27 27);
+  color: red;
+}
+
+.user-message--success {
+  background: rgb(118, 180, 118);
+  width: 60%;
+  color: green;
+  border: none;
+  margin-bottom: 5px;
+}
