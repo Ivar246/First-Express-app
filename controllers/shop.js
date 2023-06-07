@@ -5,12 +5,10 @@ const Order = require("../models/orders");
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
-      console.log(products)
       res.render("shop/product-list", {
         prods: products,
         pageTitle: "All Products",
         path: "/products",
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((error) => {
@@ -26,7 +24,6 @@ exports.getProduct = (req, res, next) => {
         product: product,
         pageTitle: "Product Details",
         path: "/products",
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch((error) => console.log(error));
@@ -39,7 +36,8 @@ exports.getIndex = (req, res, next) => {
         prods: products,
         pageTitle: "Shop",
         path: "/",
-        isAuthenticated: req.session.isLoggedIn
+        successMessage: req.flash("success")
+
       });
     })
     .catch((error) => {
@@ -53,7 +51,6 @@ exports.postCart = (req, res, next) => {
     .then(product => {
       return req.user.addToCart(product);
     }).then(result => {
-      console.log(result)
       res.redirect("/cart")
     })
 }
@@ -65,7 +62,6 @@ exports.getCart = (req, res, next) => {
         products: user.cart.items || [],
         path: "/cart",
         pageTitle: "Your Cart",
-        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err))
@@ -103,13 +99,13 @@ exports.postOrder = (req, res, next) => {
   req.user.populate("cart.items.productId")
     .then(user => {
       const products = user.cart.items.map(i => {
-        console.log(i.productId)
+        console.log(i)
         return { quantity: i.quantity, productData: { ...i.productId._doc } }
 
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products
@@ -132,12 +128,10 @@ exports.getOrders = (req, res, next) => {
   }
   Order.find({ "user.userId": req.user._id })
     .then(orders => {
-      console.log("orders:", orders)
       res.render("shop/orders", {
         orders,
         pageTitle: "Orders",
         path: "/orders",
-        isAuthenticated: req.session.isLoggedIn
       });
     });
 }
