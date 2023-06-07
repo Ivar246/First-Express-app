@@ -8,35 +8,40 @@
         <%- include("../includes/navigation.ejs") %>
 
             <main>
-                <% if (prods.length>0){ %>
-                    <div class="grid">
-                        <% for (let product of prods){ %>
-                            <article class="card product-items">
-                                <header class="card_header">
-                                    <h1 class="product_title">
-                                        <%= product.title%>
-                                    </h1>
-                                </header>
-                                <div class="card_image">
-                                    <img src="<%= product.imageUrl %>" alt="<%= product.title%>" />
-                                </div>
-                                <div class="card_content">
-                                    <h2 class="product_price">$<%= product.price%>
-                                    </h2>
-                                    <p class="product_description">
-                                        <%= product.descriptions%>
-                                    </p>
-                                </div>
-                                <div class="card_actions">
-                                    <%if (isAuthenticated){%>
-                                        <%- include("../includes/add-to-cart.ejs", {product: product})%>
-                                            <%}%>
-                                </div>
-                            </article>
-                            <%}%>
+                <% if (successMessage){%>
+                    <div class="user-message user-message--success">
+                        <%=successMessage%>
                     </div>
-                    <% } else { %>
-                        <h1>No product Available</h1>
-                        <% } %>
+                    <%}%>
+                        <% if (prods.length>0){ %>
+                            <div class="grid">
+                                <% for (let product of prods){ %>
+                                    <article class="card product-items">
+                                        <header class="card_header">
+                                            <h1 class="product_title">
+                                                <%= product.title%>
+                                            </h1>
+                                        </header>
+                                        <div class="card_image">
+                                            <img src="<%= product.imageUrl %>" alt="<%= product.title%>" />
+                                        </div>
+                                        <div class="card_content">
+                                            <h2 class="product_price">$<%= product.price%>
+                                            </h2>
+                                            <p class="product_description">
+                                                <%= product.descriptions%>
+                                            </p>
+                                        </div>
+                                        <div class="card_actions">
+                                            <%if (isAuthenticated){%>
+                                                <%- include("../includes/add-to-cart.ejs", {product: product})%>
+                                                    <%}%>
+                                        </div>
+                                    </article>
+                                    <%}%>
+                            </div>
+                            <% } else { %>
+                                <h1>No product Available</h1>
+                                <% } %>
             </main>
             <%- include("../includes/end.ejs")%>
