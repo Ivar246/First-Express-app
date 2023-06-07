@@ -19,6 +19,8 @@
           <label for="imageUrl">Image Url</label>
           <input type="url" name="imageUrl" value="<% if (editing){%><%=product.imageUrl%> <%}%>" />
         </div>
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
         <% if (editing) {%>
           <input type="hidden" name="productId" value="<%= product._id%>">
           <%}%>
