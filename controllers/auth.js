@@ -6,11 +6,12 @@ exports.getLogin = (req, res, next) => {
     // const isLoggedIn = req.get("Cookie")
     //     .split("=").pop() === "true";
     let message = req.flash("error");
+    let success = req.flash("success");
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Login',
-
-        errorMessage: (message.length === 0) ? null : message
+        successMessage: success.length === 0 ? null : success[0],
+        errorMessage: (message.length === 0) ? null : message[0]
     })
 
 }
@@ -51,18 +52,25 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.getSignup = (req, res, next) => {
+    let message = req.flash("error");
     res.render("auth/signup", {
         path: "/signup",
         pageTitle: "SignUp",
+        errorMessage: message.length === 0 ? null : message[0]
     });
 }
 
 exports.postSignup = (req, res, next) => {
     const { email, password, confirm_password } = req.body;
+    if (!isValidEmail(email)) {
+        req.flash("error", "invalid email!");
+        return res.redirect("/signup")
+    }
     User.findOne({ email: email })
         .then(userDoc => {
 
             if (userDoc) {
+                req.flash("error", "email already exist.")
                 return res.redirect("/signup")
             }
             return bcrypt.hash(password, 12)
@@ -75,6 +83,7 @@ exports.postSignup = (req, res, next) => {
                     });
                     return user.save()
                         .then(sucess => {
+                            req.flash("success", "User registered successfully.")
                             res.redirect("/login")
                         })
                         .catch(error => console.log(error));
