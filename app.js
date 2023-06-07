@@ -5,13 +5,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session")
 const MongoDBStore = require("connect-mongodb-session")(session)
-
+const csrf = require("csurf");
+const flash = require("connect-flash");
 
 const store = new MongoDBStore({
     uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
     collection: 'session',
 
 });
+const csrfProtection = csrf()
 
 const connectDB = require("./connection")
 // routes
@@ -51,6 +53,9 @@ app.set("views", "views");
 
 // parser
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+
 app.use(session({
     secret: 'my secret',
     resave: false,
@@ -58,6 +63,8 @@ app.use(session({
     store: store
 }))
 
+app.use(csrfProtection)
+app.use(flash())
 
 app.use((req, res, next) => {
     if (!req.session.user) return next();
@@ -70,11 +77,19 @@ app.use((req, res, next) => {
 
 });
 
+
+
 // mongoose connection
 connectDB();
 
 // serving static file
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+})
 
 // paths to sub paths
 app.use("/admin", admin.routes);
