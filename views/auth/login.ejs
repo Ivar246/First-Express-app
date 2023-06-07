@@ -14,23 +14,28 @@
                                 <%=errorMessage%>
                             </div>
                             <%}%>
-                                <div class="inputBox">
-                                    <input type="text" name="email" required>
-                                    <span>Email</span>
-                                    <i></i>
-                                </div>
-                                <div class="inputBox">
-                                    <input type="password" name="password" id="password" required>
-                                    <span>Password</span>
-                                    <i></i>
-                                </div>
-                                <div class="links">
-                                    <a href="#">Forget Password</a>
-                                    <a href="signup">SignUp</a>
-                                </div>
-                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                <% if (successMessage){%>
+                                    <div class="user-message user-message--success">
+                                        <%=successMessage%>
+                                    </div>
+                                    <%}%>
+                                        <div class="inputBox">
+                                            <input type="text" name="email" required>
+                                            <span>Email</span>
+                                            <i></i>
+                                        </div>
+                                        <div class="inputBox">
+                                            <input type="password" name="password" id="password" required>
+                                            <span>Password</span>
+                                            <i></i>
+                                        </div>
+                                        <div class="links">
+                                            <a href="#">Forget Password</a>
+                                            <a href="signup">SignUp</a>
+                                        </div>
+                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
 
-                                <input type="submit" value="Login">
+                                        <input type="submit" value="Login">
                     </form>
                 </div>
             </main>
