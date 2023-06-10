@@ -12,4 +12,7 @@ router.post("/logout", authContorllers.postLogout)
 router.get("/signup", loggedIn, authContorllers.getSignup)
 
 router.post("/signup", authContorllers.postSignup)
+
+router.get("/reset", authContorllers.getReset)
+
 module.exports = router
