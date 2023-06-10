@@ -1,0 +1,34 @@
+<%- include("../includes/head.ejs") %>
+    <link rel="stylesheet" href="/css/reset.css">
+    </head>
+
+    <body>
+        <%- include("../includes/navigation.ejs") %>
+            <main>
+
+                <div class="box">
+                    <form class="form" action="/reset" method="post">
+
+                        <% if (errorMessage){%>
+                            <div class="user-message user-message--error">
+                                <%=errorMessage%>
+                            </div>
+                            <%}%>
+
+                                <div class="inputBox">
+                                    <input type="text" name="email" required>
+                                    <span>Email</span>
+                                    <i></i>
+                                </div>
+
+                                <!-- <div class="links">
+                                            <a href="#">Forget Password</a>
+                                            <a href="signup">SignUp</a>
+                                        </div> -->
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+                                <input id="reset-button" type="submit" value="Reset Password">
+                    </form>
+                </div>
+            </main>
+            <%- include("../includes/end.ejs")%>
