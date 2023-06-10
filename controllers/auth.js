@@ -1,10 +1,13 @@
+const crypto = require("crypto");
+
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
 const { isValidEmail } = require("../validator/validate")
+const nodemailer = require("nodemailer");
+const sendgridTransport = require("nodemailer-sendgrid-transport")
 
 exports.getLogin = (req, res, next) => {
-    // const isLoggedIn = req.get("Cookie")
-    //     .split("=").pop() === "true";
+
     let message = req.flash("error");
     let success = req.flash("success");
     res.render('auth/login', {
@@ -18,11 +21,15 @@ exports.getLogin = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
     const { email, password } = req.body;
+    if (!isValidEmail(email)) {
+        req.flash("error", "Invalid email");
+        return res.redirect("/login");
+    }
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-                (!isValidEmail(email)) ? req.flash("error", "Invalid email") :
-                    req.flash("error", "user with the email doesn't exist");
+
+                req.flash("error", "user with the email doesn't exist");
 
 
                 return res.redirect("/login");
@@ -99,8 +106,39 @@ exports.postLogout = (req, res, next) => {
     req.session.destroy((err) => {
         if (err) console.log(err);
         res.redirect("/")
-    })
+    });
 }
 
 
+exports.getReset = (req, res, next) => {
+    const message = req.flash("error");
+    res.render("auth/reset", {
+        path: "/reset",
+        pageTitle: "Reset",
+        errorMessage: message.length === 0 ? null : message[0]
+    })
+}
 
+exports.postReset = (req, res, next) => {
+    crypto.randomBytes(32, (err, buffer) => {
+        if (err) {
+            console.log(err);
+            return res.redirect("/reset")
+        }
+        const token = buffer.toString('hex');
+        User.findOne({ email: req.body.email })
+            .then(user => {
+                if (!user) {
+                    req.flash("error", "No account with that email found.")
+                    return res.redirect("/reset");
+                }
+                user.resetToken = token;
+                user.resetTokenExpiration = Date.now() + 3600000;
+                return user.save();
+            })
+            .then(result => {
+
+            })
+            .catch(err => console.log(err))
+    })
+}
