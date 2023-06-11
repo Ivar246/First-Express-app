@@ -1,10 +1,9 @@
 const crypto = require("crypto");
+const bcrypt = require("bcryptjs")
 
 const User = require("../models/user")
-const bcrypt = require("bcryptjs")
 const { isValidEmail } = require("../validator/validate")
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport")
+const sendMail = require("../util/nodemailer")
 
 exports.getLogin = (req, res, next) => {
 
