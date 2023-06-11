@@ -143,8 +143,9 @@ exports.postReset = (req, res, next) => {
                     html: `
                         <p>You requested a password reset</p>
                         <p>Click this<a href="http://localhost:3000/reset/${token}">link</a> to set a new password</p>
-                        `
+                     `
                 }
+                return sendMail(...Object.values(emailBody));
             })
             .catch(err => console.log(err))
     })
