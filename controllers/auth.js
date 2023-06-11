@@ -137,6 +137,14 @@ exports.postReset = (req, res, next) => {
             })
             .then(result => {
 
+                res.redirect('/');
+                const emailBody = {
+                    subject: 'Password reset',
+                    html: `
+                        <p>You requested a password reset</p>
+                        <p>Click this<a href="http://localhost:3000/reset/${token}">link</a> to set a new password</p>
+                        `
+                }
             })
             .catch(err => console.log(err))
     })
