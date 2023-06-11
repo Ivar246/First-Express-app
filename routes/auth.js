@@ -15,4 +15,7 @@ router.post("/signup", authContorllers.postSignup)
 
 router.get("/reset", authContorllers.getReset)
 
+router.post("/reset", authContorllers.postReset)
+
+
 module.exports = router
