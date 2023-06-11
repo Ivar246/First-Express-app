@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.send = async () => {
+const send = async (subject = null, html = null) => {
     const testAccount = await nodemailer.createTestAccount();
 
 
@@ -18,8 +18,8 @@ exports.send = async () => {
     const option = {
         from: "ravistha869@gmail.com",
         to: "shrestha.ravi.1.a@gmail.com",
-        subject: "Greeting",
-        text: "hello this is ravi"
+        subject: subject,
+        html: html
     }
 
     return transporter.sendMail(option)
@@ -30,3 +30,5 @@ exports.send = async () => {
         .catch(err => console.log("sendmailError: ", err))
 
 }
+
+export default send;
