@@ -17,5 +17,7 @@ router.get("/reset", authContorllers.getReset)
 
 router.post("/reset", authContorllers.postReset)
 
+router.get("/reset/:token", authContorllers.getNewPassword)
 
+router.post("/new-password", authContorllers.postNewPassword)
 module.exports = router
