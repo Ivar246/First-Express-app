@@ -21,7 +21,7 @@ const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
-// const errorController = require("./controllers/error");
+const errorController = require("./controllers/error");
 
 // database import
 // const sequelize = require("./util/database");
@@ -95,7 +95,7 @@ app.use((req, res, next) => {
 app.use("/admin", admin.routes);
 app.use(shopRoutes);
 app.use(authRoutes)
-// app.use(errorController.errorHandler);
+app.use(errorController.errorHandler);
 
 // Associations between models(relation between tables)
 // Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
