@@ -31,4 +31,4 @@ const send = async (subject = null, html = null) => {
 
 }
 
-export default send;
+module.exports = send;
