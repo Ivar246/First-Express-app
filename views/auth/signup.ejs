@@ -6,7 +6,7 @@
         <%- include("../includes/navigation.ejs") %>
             <main>
                 <div class="signup-box box">
-                    <form class="form" action="/signup" method="post">
+                    <form class="form" action="/signup" method="post" novalidate>
                         <h2>Sign Up</h2>
                         <% if (errorMessage){%>
                             <div class="user-message user-message--error">
@@ -14,17 +14,20 @@
                             </div>
                             <%}%>
                                 <div class="inputBox">
-                                    <input type="text" name="email" required>
+                                    <input class="<%=(validationError.path==='email')? 'invalid': '' %>" type="text"
+                                        name="email" value="<%= oldInput.email%>" required>
                                     <span>Email</span>
                                     <i></i>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="password" name="password" id="password" required>
+                                    <input type="password" name="password" id="password"
+                                        value="<%= oldInput.password %>" required>
                                     <span>Password</span>
                                     <i></i>
                                 </div>
-                                <div class="inputBox">
-                                    <input type="password" name="confirm_password" id="password" required>
+                                <div class=" inputBox">
+                                    <input type="password" name="confirm_password" id="password"
+                                        value="<%= oldInput.confirm_password %>" required>
                                     <span>Confirm Password</span>
                                     <i></i>
                                 </div>
