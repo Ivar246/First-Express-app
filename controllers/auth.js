@@ -13,25 +13,50 @@ exports.getLogin = (req, res, next) => {
         path: '/login',
         pageTitle: 'Login',
         successMessage: success.length === 0 ? null : success[0],
-        errorMessage: (message.length === 0) ? null : message[0]
+        errorMessage: (message.length === 0) ? null : message[0],
+        oldInput: {
+            email: '',
+            password: ''
+        },
+        validationError: {}
     })
 
 }
 
 exports.postLogin = (req, res, next) => {
     const { email, password } = req.body;
-    if (!isValidEmail(email)) {
-        req.flash("error", "Invalid email");
-        return res.redirect("/login");
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).render("auth/login", {
+            pageTitle: "Login",
+            path: "/login",
+            errorMessage: errors.array()[0].msg,
+            successMessage: '',
+            oldInput: {
+                email,
+                password
+            },
+            validationError: errors.array()[0]
+        })
     }
+
+
+
     User.findOne({ email: email })
         .then(user => {
             if (!user) {
-
-                req.flash("error", "user with the email doesn't exist");
-
-
-                return res.redirect("/login");
+                return res.status(404).render("auth/login", {
+                    pageTitle: "Login",
+                    path: "/login",
+                    errorMessage: "user with that email doesn't exist",
+                    successMessage: '',
+                    oldInput: {
+                        email,
+                        password
+                    },
+                    validationError: {}
+                });
             }
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
@@ -45,7 +70,7 @@ exports.postLogin = (req, res, next) => {
                             return res.redirect("/")
                         })
                     }
-                    req.flash("error", "Password is incorrect!")
+                    req.flash("error", "password doesn't match with your email!")
                     return res.redirect("/login");
                 })
                 .catch(err => {
