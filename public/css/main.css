@@ -79,6 +79,7 @@ main {
 }
 
 .user-message {
+  font-size: 12px;
   margin: auto;
   width: 100%;
   text-align: center;
