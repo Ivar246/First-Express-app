@@ -1,6 +1,5 @@
 const express = require("express");
 const { check, body } = require("express-validator")
-
 const router = express.Router();
 const authContorllers = require("../controllers/auth")
 const { loggedIn } = require("../middleware/is_auth")
@@ -9,7 +8,12 @@ const User = require("../models/user")
 
 router.get('/login', loggedIn, authContorllers.getLogin);
 
-router.post("/login", authContorllers.postLogin)
+router.post("/login",
+    [
+        body("email").isEmail().withMessage("Invalid Email").normalizeEmail(),
+        body("password", "Password should be valid").isLength({ min: 5 }).isAlphanumeric()
+    ],
+    authContorllers.postLogin)
 
 router.post("/logout", authContorllers.postLogout)
 
@@ -30,10 +34,10 @@ router.post("/signup",
                         return Promise.reject("E-mail already exist, please pick a different one.");
                     }
                 })
-        }),
+        }).normalizeEmail(),
     body("password", "Please enter a password with only numbers and text and at least 5 characters")
         .isLength({ min: 6 })
-        .isAlphanumeric(),
+        .isAlphanumeric().trim(),
 
     body("confirm_password")
         .custom((value, { req }) => {
@@ -41,7 +45,7 @@ router.post("/signup",
                 throw new Error("Passwords doesn't match");
             }
             return true
-        })
+        }).trim()
 
     ],
     authContorllers.postSignup
