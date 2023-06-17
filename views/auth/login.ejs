@@ -20,12 +20,15 @@
                                     </div>
                                     <%}%>
                                         <div class="inputBox">
-                                            <input type="text" name="email" required>
+                                            <input class="<%=(validationError.path==='email')? 'invalid': '' %>"
+                                                type="text" name="email" value="<%= oldInput.email %>" required>
                                             <span>Email</span>
                                             <i></i>
                                         </div>
                                         <div class="inputBox">
-                                            <input type="password" name="password" id="password" required>
+                                            <input class="<%=(validationError.path==='password')? 'invalid': '' %>"
+                                                type="password" name="password" id="password"
+                                                value="<%= oldInput.password%>" required>
                                             <span>Password</span>
                                             <i></i>
                                         </div>
