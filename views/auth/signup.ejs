@@ -20,13 +20,15 @@
                                     <i></i>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="password" name="password" id="password"
-                                        value="<%= oldInput.password %>" required>
+                                    <input class="<%=(validationError.path==='password')? 'invalid': '' %>"
+                                        type="password" name="password" id="password" value="<%= oldInput.password %>"
+                                        required>
                                     <span>Password</span>
                                     <i></i>
                                 </div>
                                 <div class=" inputBox">
-                                    <input type="password" name="confirm_password" id="password"
+                                    <input class="<%=(validationError.path==='confirm_password')? 'invalid': '' %>"
+                                        type="password" name="confirm_password" id="password"
                                         value="<%= oldInput.confirm_password %>" required>
                                     <span>Confirm Password</span>
                                     <i></i>
