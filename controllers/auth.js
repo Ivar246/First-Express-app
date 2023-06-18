@@ -163,7 +163,6 @@ exports.postReset = (req, res, next) => {
             console.log(err);
             return res.redirect("/reset")
         }
-        console.log(buffer.toString("base64"))
         const token = buffer.toString('hex');
         User.findOne({ email: req.body.email })
             .then(user => {
