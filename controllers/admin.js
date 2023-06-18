@@ -1,5 +1,4 @@
 const { validationResult } = require("express-validator");
-const mongoose = require("mongoose")
 const Product = require("../models/product");
 
 // getProducts
@@ -19,7 +18,7 @@ exports.getProducts = (req, res, next) => {
       const error = new Error(err)
       error.HttpStatusCode = 500;
       return next(error)
-    })
+    });
 }
 
 // getAddProduct
@@ -41,10 +40,28 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
 
-  const { title, imageUrl, description
-  } = req.body;
+  const { title, description } = req.body;
   const price = +req.body.price;
+  const image = req.file;
+  console.log('image', image)
   const errors = validationResult(req);
+
+  if (!image) {
+    return res.status(422).render("admin/edit-product", {
+      pageTitle: "Add Product",
+      path: "/admin/add-product",
+      editing: false,
+      product: {
+        title,
+        price,
+        imageUrl: '',
+        description
+      },
+      errorMessage: 'Attached file is not an image',
+      invalidField: ''
+    });
+  }
+
 
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-product", {
@@ -53,7 +70,7 @@ exports.postAddProduct = (req, res, next) => {
       editing: false,
       product: {
         title,
-        imageUrl,
+        imageUrl: '',
         price,
         description
       },
@@ -62,8 +79,9 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
+  const imageUrl = image.path;
+  console.log("imageUrl: ", typeof imageUrl)
   const product = new Product({
-    _id: new mongoose.Types.ObjectId("648823c5c44fe446ccc78214"),
     title: title,
     price: price,
     description: description,
@@ -73,7 +91,6 @@ exports.postAddProduct = (req, res, next) => {
 
   product.save()
     .then((result) => {
-      console.log(result);
       res.redirect("/admin/products");
     })
     .catch((err) => {
@@ -92,6 +109,8 @@ exports.postAddProduct = (req, res, next) => {
       //   invalidField: ""
       // })
       // res.redirect('/500')
+      // console.log(err)
+      console.log('user ', req.user)
       const error = new Error(err)
       error.HttpStatusCode = 500;
       return next(error)
@@ -128,8 +147,14 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const { productId, title, price, imageUrl, description } = req.body;
+  const { productId, title, price, description } = req.body;
+  const image = req.file;
   const errors = validationResult(req);
+
+  if (!image) {
+
+  }
+
   if (!errors.isEmpty()) {
     const { msg: errorMessage, path: invalidField } = errors.array()[0]
     return res.status(422).render("admin/edit-product", {
@@ -139,7 +164,6 @@ exports.postEditProduct = (req, res, next) => {
       product: {
         title,
         price,
-        imageUrl,
         description,
         _id: productId
 
@@ -156,8 +180,10 @@ exports.postEditProduct = (req, res, next) => {
       }
       product.title = title;
       product.price = price;
-      product.Url = imageUrl;
       product.description = description;
+      if (image) {
+        product.imageUrl = image.path;
+      }
 
       return product.save()
         .then(result => {
