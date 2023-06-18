@@ -6,8 +6,8 @@
   <body>
     <%- include("../includes/navigation.ejs") %>
 
-      <form class="product-form" action="/admin/<% if (editing) {%>edit-product<%}else{%>add-product<%}%>"
-        method="POST">
+      <form class="product-form" action="/admin/<% if (editing) {%>edit-product<%}else{%>add-product<%}%>" method="POST"
+        enctype="multipart/form-data">
         <h2>
           <%= (editing)? 'Update Product' : 'Add Product' %>
         </h2>
@@ -26,9 +26,10 @@
               <label for="price">Price</label>
               <input type="number" name="price"
                 value="<% if (editing){%><%=product.price%><%}else{%><%=product.price%><%}%>" />
-              <label for="imageUrl">Image Url</label>
-              <input type="url" name="imageUrl"
-                value="<% if (editing){%><%=product.imageUrl%> <%}else{%><%= product.imageUrl%><%}%>" />
+              <label for="image">Image Url</label>
+              <!-- <input type="url" name="imageUrl"
+                value="<% if (editing){%><%=product.imageUrl%> <%}else{%><%= product.imageUrl%><%}%>" /> -->
+              <input type="file" name="image" id="image">
             </div>
             <input type="hidden" name="_csrf" value="<%=csrfToken%>">
 
