@@ -16,7 +16,6 @@ router.get("/add-product", isAuth, adminController.getAddProduct);
 //  admin/add-product => POST
 router.post("/add-product", [
     body("title").isString().trim().isLength({ min: 3 }).withMessage("title should at least 3 character long."),
-    body("imageUrl").isURL().withMessage("invalid image url."),
     body("price").isNumeric(),
     body("description").trim().isLength({ min: 5 })
 ], isAuth, adminController.postAddProduct);
@@ -27,7 +26,6 @@ router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
 //   /admin/edit-product =>POST
 router.post("/edit-product", [
     body("title").isString().trim().isLength({ min: 3 }).withMessage("title should be at least 3 character long."),
-    body("imageUrl").isURL().withMessage('invalid image url.'),
     body("price").isFloat(),
     body("description").trim().isLength({ min: 5 })
 ], isAuth, adminController.postEditProduct);
