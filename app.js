@@ -7,21 +7,51 @@ const session = require("express-session")
 const MongoDBStore = require("connect-mongodb-session")(session)
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer")
 
-const store = new MongoDBStore({
-    uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
-    collection: 'session',
-
-});
-const csrfProtection = csrf()
-
-const connectDB = require("./connection")
 // routes
 const admin = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
-
 const errorController = require("./controllers/error");
+
+const connectDB = require("./connection")
+
+const User = require("./models/user")
+
+
+const store = new MongoDBStore({
+    uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
+    collection: 'session',
+});
+
+const csrfProtection = csrf()
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toString() + '-' + file.originalname)
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
+        cb(null, true);
+    } else {
+        cb(null, false)
+    }
+}
+
+// module.exports = multer({ storage: storage, fileFilter: fileFilter }).single("image")
+
+
+// parser
+app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"))
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
 
 // database import
 // const sequelize = require("./util/database");
@@ -33,7 +63,6 @@ const errorController = require("./controllers/error");
 // const OrderItem = require("./models/orderItem");
 
 // const { mongoConnect } = require("./util/database")
-const User = require("./models/user")
 
 // app.engine(
 //   "hbs",
@@ -44,23 +73,16 @@ const User = require("./models/user")
 //   })
 // );
 
-connectDB();
+
 
 // template setting
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use((req, res, next) => {
-    console.log(req.useragent);
-    next();
-})
+// serving static file
+app.use(express.static(path.join(__dirname, "public")));
 
-
-// parser
-app.use(bodyParser.urlencoded({ extended: false }));
-
-
-
+// session middleware config
 app.use(session({
     secret: 'my secret',
     resave: false,
@@ -78,26 +100,7 @@ app.use((req, res, next) => {
 })
 
 
-
-// serving static file
-app.use(express.static(path.join(__dirname, "public")));
-
-
-// paths to sub paths
-app.use("/admin", admin.routes);
-app.use(shopRoutes);
-app.use(authRoutes);
-app.get("/500", errorController.get500)
-app.use(errorController.errorHandler);
-
-app.use((error, req, res, next) => {
-    res.status(500).render("500", {
-        pageTitle: "Error",
-        path: "/500",
-        isAuthenticated: req.session.isLoggedIn
-    });
-})
-
+// user
 app.use((req, res, next) => {
     if (!req.session.user) return next();
     User.findById(req.session.user._id)
@@ -113,6 +116,26 @@ app.use((req, res, next) => {
         })
 
 });
+
+
+
+// paths to sub paths
+app.use("/admin", admin.routes);
+app.use(shopRoutes);
+app.use(authRoutes);
+app.get("/500", errorController.get500)
+app.use(errorController.errorHandler);
+
+
+// app.use((error, req, res, next) => {
+//     res.status(500).render("500", {
+//         pageTitle: "Error",
+//         path: "/500",
+//         isAuthenticated: true
+//     });
+// })
+
+
 
 
 
@@ -156,6 +179,7 @@ app.use((req, res, next) => {
 //   })
 //   .catch((error) => console.log(error));
 
+connectDB();
 
 
 app.listen(3000);
