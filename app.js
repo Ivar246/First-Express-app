@@ -18,7 +18,7 @@ const errorController = require("./controllers/error");
 const connectDB = require("./connection")
 
 const User = require("./models/user")
-
+const upload = require("./middleware/upload")
 
 const store = new MongoDBStore({
     uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
@@ -48,7 +48,7 @@ const fileFilter = (req, file, cb) => {
 
 
 // parser
-app.use(multer({ storage: storage, fileFilter: fileFilter }).single("image"))
+app.use(upload)
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
