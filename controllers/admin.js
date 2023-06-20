@@ -4,7 +4,7 @@ const fileHelper = require("../util/file");
 
 // getProducts
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({ userId: req.user._id })
     // .select("title price -_id")
     // .populate("userId", "name email -_id")
     .then(products => {
@@ -214,8 +214,8 @@ exports.postEditProduct = (req, res, next) => {
 //     });
 // };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.deleteProduct = (req, res, next) => {
+  const prodId = req.params.productId;
   Product.findById(prodId).then(product => {
     if (!product) {
       return next(new Error("Product not found."))
@@ -225,11 +225,9 @@ exports.postDeleteProduct = (req, res, next) => {
   })
     .then(() => {
       console.log("Product destroyed");
-      res.redirect("/admin/products");
+      res.status(200).json({ message: "success" });
     })
     .catch((err) => {
-      const error = new Error(err)
-      error.HttpStatusCode = 500;
-      return next(error)
+      res.status(500).json({ message: "Deleting product failed" })
     });
 };
