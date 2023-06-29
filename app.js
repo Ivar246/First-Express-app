@@ -8,6 +8,9 @@ const MongoDBStore = require("connect-mongodb-session")(session)
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer")
+const dotenv = require("dotenv");
+
+dotenv.config({ path: './.env' })
 
 // routes
 const admin = require("./routes/admin");
@@ -21,7 +24,7 @@ const User = require("./models/user")
 const upload = require("./middleware/upload")
 
 const store = new MongoDBStore({
-    uri: "mongodb+srv://ravistha:root123@cluster0.x0jnnah.mongodb.net/?retryWrites=true&w=majority",
+    uri: process.env.DB,
     collection: 'session',
 });
 
@@ -165,4 +168,4 @@ app.use((error, req, res, next) => {
 connectDB();
 
 
-app.listen(3000);
+app.listen(8000);
