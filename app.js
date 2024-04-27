@@ -70,7 +70,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/images', express.static(path.join(__dirname, "images")))
 // session middleware config
 app.use(session({
-    secret: 'my secret',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     store: store

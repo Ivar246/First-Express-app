@@ -49,9 +49,8 @@ body {
 }
 
 /* .active applied if a has active class attached to it */
-.item a:hover,
-.item a:active,
-.item a.active {
+.main-header_item-list .item a:hover,
+.main-header_item-list .item a.active {
   color: #3e00a1;
 }
 
@@ -112,6 +111,7 @@ main {
   margin: 0 .1rem;
 }
 
+.pagination .active-page,
 .pagination a:hover,
 .pagination a:active {
   background-color: #00695c;
